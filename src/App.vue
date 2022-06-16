@@ -5,6 +5,63 @@
       <router-link to="/private">Private</router-link>
     </div>
     <router-view />
+    <span>{{ error }}</span>
+    <span>Authenticated: {{ isAuthenticated }}</span>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">Development mode</h1>
+      <p class="lead">
+        This local static site use our cryptr API on our test environment.
+      </p>
+      <button href="#" class="btn btn-secondary" @click="signinWithSSO">
+        Signin with SSO
+      </button>
+    </div>
+    <div class="card mb-4 box-shadow">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Gateway</h4>
+        <p>You don't known what's user's IDP? use our gateway</p>
+        <button
+          type="button"
+          @click="globalGateway"
+          class="btn btn-info mr-3 btn-sm"
+          href="#"
+        >
+          Global Gateway
+        </button>
+        <button
+          type="button"
+          @click="gatewayIdp"
+          class="btn btn-info mr-3 btn-sm"
+          href="#"
+        >
+          Gateway with one IDP
+        </button>
+        <button
+          type="button"
+          @click="gatewayIdps"
+          class="btn btn-info mr-3 btn-sm"
+          href="#"
+        >
+          Gateway with multiple idps
+        </button>
+      </div>
+    </div>
+    <div v-if="user.email" class="card box-shadow">
+      <div class="card-header">
+        <h4>User</h4>
+      </div>
+      <div class="card-body">
+        <p v-if="user.ips">
+          You connected through {{ user.ips }} provider (using '{{ user.sci }}'
+          idp)
+        </p>
+        <ul>
+          <li>Email: {{ user.email }}</li>
+          <li>User ID: {{ user.sub }}</li>
+          <li>Organization Domain: {{ user.tnt }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -30,3 +87,93 @@
   color: #42b983;
 }
 </style>
+
+<script>
+import CryptrSpa from "@cryptr/cryptr-spa-js";
+const idpId7 = process.env.VUE_APP_IDP1;
+const idpId8 = process.env.VUE_APP_IDP2;
+const config = {
+  tenant_domain: process.env.VUE_APP_CRYPTR_TENANT_DOMAIN,
+  client_id: process.env.VUE_APP_CRYPTR_CLIENT_ID,
+  audience: process.env.VUE_APP_CRYPTR_AUDIENCE,
+  default_redirect_uri: process.env.VUE_APP_CRYPTR_REDIRECT_URI,
+  cryptr_base_url: process.env.VUE_APP_CRYPTR_BASE_URL,
+  default_locale: process.env.VUE_APP_CRYPTR_DEFAULT_LOCALE,
+  telemetry: false,
+  dedicated_server: process.env.VUE_APP_CRYPTR_DEDICATED_SERVER === "true",
+};
+console.log(config);
+
+export default {
+  data() {
+    return {
+      loading: false,
+      isAuthenticated: false,
+      user: {},
+      cryptrClient: null,
+      error: null,
+    };
+  },
+  methods: {
+    globalGateway() {
+      this.cryptrClient.signInWithSSOGateway();
+    },
+    gatewayIdp() {
+      this.cryptrClient.signInWithSSOGateway(idpId7);
+    },
+    gatewayIdps() {
+      this.cryptrClient.signInWithSSOGateway([idpId7, idpId8]);
+    },
+    signinWithSSO() {
+      return this.cryptrClient.signInWithSSO(idpId7);
+    },
+    logOut() {
+      return this.cryptrClient.logOut(() => {
+        alert("You are now logged out ! Bye :(");
+        window.location.reload();
+        window.location.replace(location.href.split("?")[0]);
+      });
+    },
+  },
+  async created() {
+    this.cryptrClient = await CryptrSpa.createClient(config);
+    try {
+      const canAuthenticate = await this.cryptrClient.canHandleAuthentication();
+      if (canAuthenticate) {
+        await this.cryptrClient.handleRedirectCallback();
+        let params = new URL(window.location).searchParams;
+        let authParamsKeys = [
+          "authorization_code",
+          "authorization_id",
+          "state",
+          "code",
+          "organization_domain",
+        ];
+        for (const key of authParamsKeys) {
+          params.delete(key);
+        }
+        const endUrl = params.toString() == "" ? "" : "?" + params.toString();
+
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname + endUrl
+        );
+      } else {
+        await this.cryptrClient.handleRefreshTokens();
+      }
+    } catch (e) {
+      this.error = e;
+    } finally {
+      this.isAuthenticated =
+        await this.cryptrClient.currentAccessTokenPresent();
+      if (this.cryptrClient.getUser()) {
+        this.user = this.cryptrClient.getUser();
+      } else {
+        this.user = {};
+      }
+      this.loading = false;
+    }
+  },
+};
+</script>

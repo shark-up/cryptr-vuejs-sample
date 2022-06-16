@@ -4,11 +4,9 @@
     <p>
       <span>
         For a complete guide see
-        <pre>
-        <code>
+        <a href="https://www.npmjs.com/package/@cryptr/cryptr-spa-js">
           @cryptr/cryptr-spa-js
-        </code>
-      </pre>
+        </a>
       </span>
     </p>
   </div>
