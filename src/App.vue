@@ -102,7 +102,6 @@ const config = {
   telemetry: false,
   dedicated_server: process.env.VUE_APP_CRYPTR_DEDICATED_SERVER === "true",
 };
-console.log(config);
 
 export default {
   data() {
