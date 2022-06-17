@@ -1,6 +1,10 @@
 <template>
   <div class="home">
-    <img alt="Cryptr logo" src="https://www.cryptr.co/" />
+    <img
+      src="@/assets/logo_cryptr_horizontal.png"
+      height="80"
+      style="margin-bottom: 32px"
+    />
     <HelloWorld msg="Welcome to Cryptr Vue Sample App" />
   </div>
 </template>
