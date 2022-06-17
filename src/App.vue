@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/private">Private</router-link>
-    </div> -->
     <router-view
       :isAuthenticated="isAuthenticated"
       :loading="loading"
@@ -66,7 +62,7 @@ export default {
       CryptrSpa.events.REFRESH_INVALID_GRANT,
       (RigError) => {
         console.error(RigError);
-        this.logOut();
+        this.cryptrClient.logOut();
       }
     );
 

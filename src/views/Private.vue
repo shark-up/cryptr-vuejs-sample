@@ -1101,3 +1101,20 @@
     <!--   Core JS Files   -->
   </div>
 </template>
+
+
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+
+@Component({})
+export default class Private extends Vue{
+  @Prop() private isAuthenticated!: boolean;
+
+  created() {
+    console.log("private created");
+    if(!this.isAuthenticated) {
+      this.$router.back();
+    }
+  }
+}
+</script>
