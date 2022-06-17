@@ -98,8 +98,16 @@
 
 <script>
 import CryptrSpa from "@cryptr/cryptr-spa-js";
-const idpId7 = process.env.VUE_APP_IDP1;
-const idpId8 = process.env.VUE_APP_IDP2;
+var firstIdp = null;
+var idpIds = null;
+if (process.env.VUE_APP_CRYPTR_IDP_IDS) {
+  idpIds = process.env.VUE_APP_CRYPTR_IDP_IDS.split(",");
+  firstIdp = idpIds[0];
+} else {
+  console.warn("no VUE_APP_CRYPTR_IDP_IDS");
+}
+console.log(firstIdp);
+console.log(idpIds);
 const config = {
   tenant_domain: process.env.VUE_APP_CRYPTR_TENANT_DOMAIN,
   client_id: process.env.VUE_APP_CRYPTR_CLIENT_ID,
@@ -107,7 +115,7 @@ const config = {
   default_redirect_uri: process.env.VUE_APP_CRYPTR_REDIRECT_URI,
   cryptr_base_url: process.env.VUE_APP_CRYPTR_BASE_URL,
   default_locale: process.env.VUE_APP_CRYPTR_DEFAULT_LOCALE,
-  telemetry: false,
+  telemetry: process.env.VUE_APP_CRYPTR_TELEMETRY === "true",
   dedicated_server: process.env.VUE_APP_CRYPTR_DEDICATED_SERVER === "true",
 };
 
@@ -126,13 +134,13 @@ export default {
       this.cryptrClient.signInWithSSOGateway();
     },
     gatewayIdp() {
-      this.cryptrClient.signInWithSSOGateway(idpId7);
+      this.cryptrClient.signInWithSSOGateway(firstIdp);
     },
     gatewayIdps() {
-      this.cryptrClient.signInWithSSOGateway([idpId7, idpId8]);
+      this.cryptrClient.signInWithSSOGateway(idpIds);
     },
     signinWithSSO() {
-      return this.cryptrClient.signInWithSSO(idpId7);
+      return this.cryptrClient.signInWithSSO(firstIdp);
     },
     logOut() {
       return this.cryptrClient.logOut(() => {
@@ -147,7 +155,9 @@ export default {
     try {
       const canAuthenticate = await this.cryptrClient.canHandleAuthentication();
       if (canAuthenticate) {
-        await this.cryptrClient.handleRedirectCallback();
+        const process = await this.cryptrClient.handleRedirectCallback();
+        console.debug("process redirect callback");
+        console.debug(process);
         let params = new URL(window.location).searchParams;
         let authParamsKeys = [
           "authorization_code",
