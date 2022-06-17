@@ -7,6 +7,14 @@
     <router-view />
     <span>{{ error }}</span>
     <span>Authenticated: {{ isAuthenticated }}</span>
+    <button
+      v-if="isAuthenticated"
+      type="button"
+      class="btn btn-danger"
+      @click="logOut"
+    >
+      Logout
+    </button>
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">Development mode</h1>
       <p class="lead">
