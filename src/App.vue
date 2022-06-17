@@ -6,7 +6,8 @@
     </div>
     <router-view />
     <span>{{ error }}</span>
-    <span>Authenticated: {{ isAuthenticated }}</span>
+    <span v-if="!loading">Authenticated: {{ isAuthenticated }}</span>
+    <span v-if="loading">Loading ..</span>
     <button
       v-if="isAuthenticated"
       type="button"
@@ -20,7 +21,12 @@
       <p class="lead">
         This local static site use our cryptr API on our test environment.
       </p>
-      <button href="#" class="btn btn-secondary" @click="signinWithSSO">
+      <button
+        href="#"
+        class="btn btn-secondary"
+        v-if="!loading"
+        @click="signinWithSSO"
+      >
         Signin with SSO
       </button>
     </div>
@@ -28,6 +34,8 @@
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Gateway</h4>
         <p>You don't known what's user's IDP? use our gateway</p>
+      </div>
+      <div class="card-body" v-if="!loading">
         <button
           type="button"
           @click="globalGateway"
@@ -58,7 +66,7 @@
       <div class="card-header">
         <h4>User</h4>
       </div>
-      <div class="card-body">
+      <div class="card-body" v-if="!loading">
         <p v-if="user.ips">
           You connected through {{ user.ips }} provider (using '{{ user.sci }}'
           idp)
@@ -152,7 +160,16 @@ export default {
   },
   async created() {
     this.cryptrClient = await CryptrSpa.createClient(config);
+    window.addEventListener(
+      CryptrSpa.events.REFRESH_INVALID_GRANT,
+      (RigError) => {
+        console.error(RigError);
+        this.logOut();
+      }
+    );
+
     try {
+      this.loading = true;
       const canAuthenticate = await this.cryptrClient.canHandleAuthentication();
       if (canAuthenticate) {
         const process = await this.cryptrClient.handleRedirectCallback();
