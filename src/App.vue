@@ -13,7 +13,7 @@
 </template>
 
 <style>
-@import "./assets/css/argon-dashboard.css";
+/* @import "./assets/css/argon-dashboard.css"; */
 @import "./assets/css/nucleo-icons.css";
 @import "./assets/css/nucleo-svg.css";
 @import "https://kit.fontawesome.com/42d5adcbca.js";
