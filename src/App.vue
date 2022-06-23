@@ -6,6 +6,7 @@
       :error="error"
       :user="user"
       :cryptrClient="cryptrClient"
+      :adfsIdp="adfsIdp"
       :firstIdp="firstIdp"
       :idpIds="idpIds"
     />
@@ -22,10 +23,12 @@
 <script>
 import CryptrSpa from "@cryptr/cryptr-spa-js";
 var firstIdp = null;
+var adfsIdp = null;
 var idpIds = null;
 if (process.env.VUE_APP_CRYPTR_IDP_IDS) {
   idpIds = process.env.VUE_APP_CRYPTR_IDP_IDS.split(",");
   firstIdp = idpIds[0];
+  adfsIdp = idpIds[idpIds.length - 1];
 } else {
   console.warn("no VUE_APP_CRYPTR_IDP_IDS");
 }
@@ -52,11 +55,13 @@ export default {
       error: null,
       idpIds: [],
       firstIdp: null,
+      adfsIdp: null,
     };
   },
   async created() {
     this.firstIdp = firstIdp;
     this.idpIds = idpIds;
+    this.adfsIdp = adfsIdp;
     this.cryptrClient = await CryptrSpa.createClient(config);
     window.addEventListener(
       CryptrSpa.events.REFRESH_INVALID_GRANT,

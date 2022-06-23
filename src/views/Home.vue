@@ -24,6 +24,14 @@
           Signin with SSO
         </button>
         <button
+          href="#"
+          class="btn btn-secondary mx-3"
+          v-if="!loading && !isAuthenticated && adfsIdp"
+          @click="cryptrClient.signInWithSSO(adfsIdp)"
+        >
+          Signin with ADFS
+        </button>
+        <button
           v-if="isAuthenticated"
           type="button"
           class="btn btn-danger mx-3"
@@ -102,6 +110,7 @@ export default class Home extends Vue {
   @Prop() private user!: unknown;
   @Prop() private error!: unknown;
   @Prop() private firstIdp!: string | null;
+  @Prop() private adfsIdp!: string | null;
   @Prop() private idpIds!: unknown | null;
 
 }
