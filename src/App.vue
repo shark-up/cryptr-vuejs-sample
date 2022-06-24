@@ -9,6 +9,7 @@
       :adfsIdp="adfsIdp"
       :firstIdp="firstIdp"
       :idpIds="idpIds"
+      :idpByProvider="idpByProvider"
     />
   </div>
 </template>
@@ -25,6 +26,7 @@ import CryptrSpa from "@cryptr/cryptr-spa-js";
 var firstIdp = null;
 var adfsIdp = null;
 var idpIds = null;
+var idpByProvider = null;
 if (process.env.VUE_APP_CRYPTR_IDP_IDS) {
   idpIds = process.env.VUE_APP_CRYPTR_IDP_IDS.split(",");
   firstIdp = idpIds[0];
@@ -32,8 +34,19 @@ if (process.env.VUE_APP_CRYPTR_IDP_IDS) {
 } else {
   console.warn("no VUE_APP_CRYPTR_IDP_IDS");
 }
+if (process.env.VUE_APP_CRYPTR_IDPS_BY_PROVIDER) {
+  var items = process.env.VUE_APP_CRYPTR_IDPS_BY_PROVIDER.split(",");
+  idpByProvider = items.map((item) => {
+    var parts = item.split(":");
+    return {
+      provider: parts[0],
+      idpId: parts[1],
+    };
+  });
+}
 console.log(firstIdp);
 console.log(idpIds);
+console.log(idpByProvider);
 const config = {
   tenant_domain: process.env.VUE_APP_CRYPTR_TENANT_DOMAIN,
   client_id: process.env.VUE_APP_CRYPTR_CLIENT_ID,
@@ -56,12 +69,14 @@ export default {
       idpIds: [],
       firstIdp: null,
       adfsIdp: null,
+      idpByProvider: null,
     };
   },
   async created() {
     this.firstIdp = firstIdp;
     this.idpIds = idpIds;
     this.adfsIdp = adfsIdp;
+    this.idpByProvider = idpByProvider;
     this.cryptrClient = await CryptrSpa.createClient(config);
     window.addEventListener(
       CryptrSpa.events.REFRESH_INVALID_GRANT,
