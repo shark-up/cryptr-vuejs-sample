@@ -1,10 +1,19 @@
 <template>
   <div class="home container">
-    <img src="@/assets/logo_cryptr_horizontal.png" height="80" style="margin-bottom: 32px" />
+    <img
+      src="@/assets/logo_cryptr_horizontal.png"
+      height="80"
+      style="margin-bottom: 32px"
+    />
     <HelloWorld msg="Welcome to Cryptr Vue Sample App" />
     <hr />
     <div>
-      <span>{{ error }}</span>
+      <div class="alert alert-danger" v-if="error">
+        <span>{{ error }}</span>
+      </div>
+      <div class="alert alert-info" v-if="!loading && isAuthenticated">
+        <span>Seems all good</span>
+      </div>
       <span v-if="loading">Loading ..</span>
       <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">Development mode</h1>
@@ -58,14 +67,16 @@
             type="button"
             @click="cryptrClient.signInWithSSOGateway(firstIdp)"
             class="btn btn-success mx-3 btn-sm"
-            href="#">
+            href="#"
+          >
             Gateway with one IDP
           </button>
           <button
             type="button"
             @click="cryptrClient.signInWithSSOGateway(idpIds)"
             class="btn btn-success mx-3 btn-sm"
-            href="#">
+            href="#"
+          >
             Gateway with multiple idps
           </button>
         </div>
@@ -77,7 +88,7 @@
         <div class="card-body">
           <p v-if="user.ips">
             You connected through {{ user.ips }} provider (using '{{
-            user.sci
+              user.sci
             }}' idp)
           </p>
           <ul>

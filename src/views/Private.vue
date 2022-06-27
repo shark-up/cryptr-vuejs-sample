@@ -1109,7 +1109,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class Private extends Vue {
   @Prop() private isAuthenticated!: boolean;
 
-  created() {
+  created(): void {
     console.log("private created");
     if (!this.isAuthenticated) {
       this.$router.back();

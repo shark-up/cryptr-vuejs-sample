@@ -44,9 +44,6 @@ if (process.env.VUE_APP_CRYPTR_IDPS_BY_PROVIDER) {
     };
   });
 }
-console.log(firstIdp);
-console.log(idpIds);
-console.log(idpByProvider);
 const config = {
   tenant_domain: process.env.VUE_APP_CRYPTR_TENANT_DOMAIN,
   client_id: process.env.VUE_APP_CRYPTR_CLIENT_ID,
@@ -59,6 +56,7 @@ const config = {
 };
 
 export default {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
       loading: false,
@@ -72,6 +70,7 @@ export default {
       idpByProvider: null,
     };
   },
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async created() {
     this.firstIdp = firstIdp;
     this.idpIds = idpIds;
@@ -115,6 +114,7 @@ export default {
         await this.cryptrClient.handleRefreshTokens();
       }
     } catch (e) {
+      console.error("error in App.vue Auth process");
       this.error = e;
     } finally {
       this.isAuthenticated =

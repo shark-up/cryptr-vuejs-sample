@@ -51,6 +51,7 @@
       "@vue/prettier",
       "@vue/prettier/@typescript-eslint"
     ],
+    "ignorePatterns": ["src/assets/*"],
     "parserOptions": {
       "ecmaVersion": 2020
     },
