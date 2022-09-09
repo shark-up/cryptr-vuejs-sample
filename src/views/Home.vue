@@ -57,11 +57,11 @@
         <div class="card-body">
           <button
             type="button"
-            @click="cryptrClient.signInWithSSOGateway()"
+            @click="cryptrClient.signInWithSSOGateway(null, { locale: 'en' })"
             class="btn btn-success mx-3 btn-sm"
             href="#"
           >
-            Global Gateway
+            Global Gateway (EN)
           </button>
           <button
             type="button"
@@ -73,11 +73,11 @@
           </button>
           <button
             type="button"
-            @click="cryptrClient.signInWithSSOGateway(idpIds)"
+            @click="cryptrClient.signInWithSSOGateway(idpIds, { locale: 'fr' })"
             class="btn btn-success mx-3 btn-sm"
             href="#"
           >
-            Gateway with multiple idps
+            Gateway with multiple idps (FR)
           </button>
         </div>
       </div>
