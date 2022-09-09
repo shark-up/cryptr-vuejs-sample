@@ -70,5 +70,8 @@
     "*.{js,jsx,vue,ts,tsx}": [
       "git add"
     ]
+  },
+  "engines": {
+    "node": "^14"
   }
 }
