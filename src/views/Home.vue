@@ -81,6 +81,22 @@
           </button>
         </div>
       </div>
+      <!-- REQUIRES the SAME CLIENT_ID FOR MASTER TENANT -->
+      <div class="card mb-4 box-shadow" v-if="!loading && magicLinkActivated">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">Magic Link</h4>
+          <p>Here is also a test of magic link</p>
+        </div>
+        <div class="card-body">
+          <button
+            href="#"
+            class="btn btn-outline-primary mx-3"
+            @click="cryptrClient.signInWithRedirect()"
+          >
+            Magic Link Login
+          </button>
+        </div>
+      </div>
       <div v-if="user.email && !loading" class="card box-shadow">
         <div class="card-header">
           <h4>User</h4>
@@ -121,5 +137,6 @@ export default class Home extends Vue {
   @Prop() private adfsIdp!: string | null;
   @Prop() private idpIds!: unknown | null;
   @Prop() private idpByProvider!: unknown | null;
+  @Prop() private magicLinkActivated!: unknown | null;
 }
 </script>

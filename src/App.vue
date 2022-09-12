@@ -10,6 +10,7 @@
       :firstIdp="firstIdp"
       :idpIds="idpIds"
       :idpByProvider="idpByProvider"
+      :magicLinkActivated="magicLinkActivated"
     />
   </div>
 </template>
@@ -27,6 +28,7 @@ var firstIdp = null;
 var adfsIdp = null;
 var idpIds = null;
 var idpByProvider = null;
+var magicLinkActivated = null;
 if (process.env.VUE_APP_CRYPTR_IDP_IDS) {
   idpIds = process.env.VUE_APP_CRYPTR_IDP_IDS.split(",");
   firstIdp = idpIds[0];
@@ -44,6 +46,11 @@ if (process.env.VUE_APP_CRYPTR_IDPS_BY_PROVIDER) {
     };
   });
 }
+
+if (process.env.VUE_APP_CRYPTR_MAGIC_LINK) {
+  magicLinkActivated = process.env.VUE_APP_CRYPTR_MAGIC_LINK === "true";
+}
+
 const config = {
   tenant_domain: process.env.VUE_APP_CRYPTR_TENANT_DOMAIN,
   client_id: process.env.VUE_APP_CRYPTR_CLIENT_ID,
@@ -68,6 +75,7 @@ export default {
       firstIdp: null,
       adfsIdp: null,
       idpByProvider: null,
+      magicLinkActivated: magicLinkActivated,
     };
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -76,6 +84,7 @@ export default {
     this.idpIds = idpIds;
     this.adfsIdp = adfsIdp;
     this.idpByProvider = idpByProvider;
+    this.magicLinkActivated = magicLinkActivated;
     this.cryptrClient = await CryptrSpa.createClient(config);
     window.addEventListener(
       CryptrSpa.events.REFRESH_INVALID_GRANT,
