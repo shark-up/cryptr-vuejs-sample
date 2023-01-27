@@ -65,6 +65,7 @@ const config = {
   default_locale: process.env.VUE_APP_CRYPTR_DEFAULT_LOCALE,
   telemetry: process.env.VUE_APP_CRYPTR_TELEMETRY === "true",
   dedicated_server: process.env.VUE_APP_CRYPTR_DEDICATED_SERVER === "true",
+  fixed_pkce: process.env.VUE_APP_CRYPTR_FIXED_PKCE === "true",
 };
 
 export default {
