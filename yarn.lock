@@ -953,10 +953,10 @@
   resolved "https://registry.yarnpkg.com/@cryptr/cryptr-config-validation/-/cryptr-config-validation-0.1.0.tgz#51816c6b6961474663a33a72bb7eb978ce1591d6"
   integrity sha512-uB8E9iwTjHExzlCCLr8ZH6KybidnmUb+M+qjJK3YIxognRkzEo4qpioabSHqCYsP6hYrbdtr8QpaiKHC0CWjaw==
 
-"@cryptr/cryptr-spa-js@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@cryptr/cryptr-spa-js/-/cryptr-spa-js-1.1.0.tgz#fb6b1f465b2ad238e351bd9a3585eaddb156e2d0"
-  integrity sha512-ei0ScI0QCvi3n5TnwUJqYK9DUoTw+k5cCgB5kei9/ixurDQLih9JVZfw9BrelxwgzJCLshCas+ztcpfXeJ+8ug==
+"@cryptr/cryptr-spa-js@1.2.0-beta":
+  version "1.2.0-beta"
+  resolved "https://registry.yarnpkg.com/@cryptr/cryptr-spa-js/-/cryptr-spa-js-1.2.0-beta.tgz#261062c0f52089772dc9fa76096debfb858c3c98"
+  integrity sha512-wqFurDwBUyG/LGWvsCzmj44pj+UrgNQM85yUQEs6V98UZnkdfsDNI5SuMLMcf0YgSxOdwP1qf2QXGTf71cCwVA==
   dependencies:
     "@cryptography/sha256" "^0.2.0"
     "@cryptr/cryptr-config-validation" "^0.1.0"
@@ -967,7 +967,7 @@
     "@types/jwt-decode" "^2.2.1"
     Base64 "^1.1.0"
     axios "^0.27.2"
-    crypto-js "^4.0.0"
+    crypto-js "^4.1.1"
     es-cookie "^1.3.2"
     fast-text-encoding "^1.0.3"
     hasha "^5.2.0"
@@ -3467,7 +3467,7 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
-crypto-js@^4.0.0:
+crypto-js@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
   integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
