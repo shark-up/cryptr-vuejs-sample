@@ -29,6 +29,9 @@ var adfsIdp = null;
 var idpIds = null;
 var idpByProvider = null;
 var magicLinkActivated = null;
+
+var firstDomain = '3-belges';
+var secondDomain = 'tikcat';
 if (process.env.VUE_APP_CRYPTR_IDP_IDS) {
   idpIds = process.env.VUE_APP_CRYPTR_IDP_IDS.split(",");
   firstIdp = idpIds[0];
@@ -85,6 +88,8 @@ export default {
     this.adfsIdp = adfsIdp;
     this.idpByProvider = idpByProvider;
     this.magicLinkActivated = magicLinkActivated;
+    this.firstDomain = firstDomain;
+    this.secondDomain = secondDomain;
     this.cryptrClient = await CryptrSpa.createClient(config);
     window.addEventListener(
       CryptrSpa.events.REFRESH_INVALID_GRANT,

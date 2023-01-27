@@ -81,6 +81,38 @@
           </button>
         </div>
       </div>
+      <div class="card mb-4 box-shadow" v-if="!loading">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">Authn Connections</h4>
+          <p>Tes our connections</p>
+        </div>
+        <div class="card-body">
+          <button
+            type="button"
+            @click="cryptrClient.signInWithDomain(firstDomain)"
+            class="btn btn-success mx-3 btn-sm"
+            href="#"
+          >
+            Password Connection
+          </button>
+          <button
+            type="button"
+            @click="cryptrClient.signInWithDomain(secondDomain)"
+            class="btn btn-success mx-3 btn-sm"
+            href="#"
+          >
+            Magic link connection
+          </button>
+          <button
+            type="button"
+            @click="cryptrClient.signInWithSSOGateway(firstIp)"
+            class="btn btn-success mx-3 btn-sm"
+            href="#"
+          >
+            Sso Connection
+          </button>
+        </div>
+      </div>
       <!-- REQUIRES the SAME CLIENT_ID FOR MASTER TENANT -->
       <div class="card mb-4 box-shadow" v-if="!loading && magicLinkActivated">
         <div class="card-header">
@@ -138,5 +170,7 @@ export default class Home extends Vue {
   @Prop() private idpIds!: unknown | null;
   @Prop() private idpByProvider!: unknown | null;
   @Prop() private magicLinkActivated!: unknown | null;
+  @Prop() private firstDomain!: string | null;
+  @Prop() private secondDomain!: string | null;
 }
 </script>
