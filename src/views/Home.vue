@@ -93,7 +93,7 @@
             class="btn btn-success mx-3 btn-sm"
             href="#"
           >
-            Password Connection
+            Magic link connection
           </button>
           <button
             type="button"
@@ -101,7 +101,7 @@
             class="btn btn-success mx-3 btn-sm"
             href="#"
           >
-            Magic link connection
+            Password Connection
           </button>
           <button
             type="button"
