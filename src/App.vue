@@ -9,6 +9,8 @@
       :adfsIdp="adfsIdp"
       :firstIdp="firstIdp"
       :idpIds="idpIds"
+      :firstDomain="firstDomain"
+      :secondDomain="secondDomain"
       :idpByProvider="idpByProvider"
       :magicLinkActivated="magicLinkActivated"
     />
