@@ -110,7 +110,7 @@
             href="#"
             title="{{firstIdp}}"
           >
-            Sso Connection
+            Sso Connection ({{ firstIdp }})
           </button>
         </div>
       </div>
