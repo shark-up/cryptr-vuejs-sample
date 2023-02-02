@@ -108,6 +108,7 @@
             @click="cryptrClient.signInWithSSOGateway(firstIdp)"
             class="btn btn-success mx-3 btn-sm"
             href="#"
+            title="{{firstIdp}}"
           >
             Sso Connection
           </button>
