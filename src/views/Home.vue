@@ -105,7 +105,7 @@
           </button>
           <button
             type="button"
-            @click="cryptrClient.signInWithSSOGateway(firstIp)"
+            @click="cryptrClient.signInWithSSOGateway(firstIdp)"
             class="btn btn-success mx-3 btn-sm"
             href="#"
           >
