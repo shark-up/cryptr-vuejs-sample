@@ -105,12 +105,21 @@
           </button>
           <button
             type="button"
-            @click="cryptrClient.signInWithSSOGateway(firstIdp)"
+            @click="cryptrClient.signInWithDomain('blablabus')"
             class="btn btn-success mx-3 btn-sm"
             href="#"
-            title="{{firstIdp}}"
+            title="firstIdp"
           >
-            Sso Connection ({{ firstIdp }})
+            Sso Connection
+          </button>
+          <button
+            type="button"
+            @click="cryptrClient.signInWithSSOGateway(firstIdp)"
+            class="btn btn-info mx-3 btn-sm"
+            href="#"
+            title="firstIdp"
+          >
+            Sso Connection (providing idp)
           </button>
         </div>
       </div>
