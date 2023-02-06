@@ -65,6 +65,14 @@
           </button>
           <button
             type="button"
+            @click="cryptrClient.signInWithDomain(null, {locale: 'fr'})"
+            class="btn btn-success mx-3 btn-sm"
+            href="#"
+          >
+            Global Gateway(fr)
+          </button>
+          <button
+            type="button"
             @click="cryptrClient.signInWithSSOGateway(firstIdp)"
             class="btn btn-success mx-3 btn-sm"
             href="#"
